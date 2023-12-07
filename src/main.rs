@@ -2,7 +2,7 @@
 #![feature(ascii_char)]
 #![feature(ascii_char_variants)]
 
-use std::collections::HashSet;
+use std::{collections::HashSet, str::FromStr};
 
 const NUMBERS: &[&str] = &[
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
@@ -401,6 +401,71 @@ fn day5() {
     println!("day 5 part 2: {best_location}");
 }
 
+fn parse_int_list<T>(s: &str) -> Vec<T>
+where
+    T: FromStr,
+    <T as std::str::FromStr>::Err: std::fmt::Debug,
+{
+    s.split_ascii_whitespace()
+        .map(|num| num.parse::<T>().unwrap())
+        .collect::<Vec<T>>()
+}
+
+fn parse_spread_int<T>(s: &str) -> T
+where
+    T: FromStr,
+    <T as std::str::FromStr>::Err: std::fmt::Debug,
+{
+    s.replace(' ', "").parse::<T>().unwrap()
+}
+
+fn day6() {
+    let input = include_str!("input/test6.txt");
+    let lines = input.lines().collect::<Vec<&str>>();
+    // part 1
+    {
+        let times = parse_int_list::<u64>(lines[0].split(':').last().unwrap());
+        let dists = parse_int_list::<u64>(lines[1].split(':').last().unwrap());
+
+        let mut result = 1;
+        for i in 0..times.len() {
+            let time = times[i];
+            let dist = dists[i];
+
+            let ftime = time as f32;
+
+            let det = (ftime * ftime - 4.0 * dist as f32).sqrt();
+            let lower_bound = ((ftime - det) / 2.0).max(0.0) as u64;
+            let upper_bound = ((ftime + det) / 2.0) as u64;
+            println!(
+                "  {} {} {}",
+                lower_bound,
+                upper_bound,
+                upper_bound - lower_bound
+            );
+            result *= upper_bound - lower_bound;
+        }
+
+        println!("day 6 part 1: {result}");
+    }
+
+    // part 2
+    {
+        let time = 7; //parse_spread_int::<i64>(lines[0].split(':').last().unwrap());
+        let dist = 9; //parse_spread_int::<i64>(lines[1].split(':').last().unwrap());
+
+        let ftime = time as f32;
+
+        let det = (ftime * ftime - 4.0 * dist as f32).sqrt();
+        let lower_bound = ((ftime - det) / 2.0).max(0.0) as u64;
+        let upper_bound = ((ftime + det) / 2.0) as u64;
+
+        // result *= upper_bound - lower_bound;
+
+        println!("{} {}", upper_bound, lower_bound);
+    }
+}
+
 fn main() {
     // let input = include_str!("input/input1.txt");
     // let result: u32 = input.lines().map(line_to_num).sum();
@@ -411,7 +476,8 @@ fn main() {
     // day2();
     // day3();
     // day4();
-    day5();
+    // day5();
+    day6();
 }
 
 #[cfg(test)]
