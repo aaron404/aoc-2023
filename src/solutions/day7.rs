@@ -1,6 +1,4 @@
-use std::{collections::HashMap, cmp::Ordering};
-
-
+use std::{cmp::Ordering, collections::HashMap};
 
 fn card_to_rank(card: &u8) -> u8 {
     match card {
@@ -44,7 +42,7 @@ impl Hand {
             }
         }
 
-        let mut counts = counts.values().map(|v| *v).collect::<Vec<u8>>();
+        let mut counts = counts.values().copied().collect::<Vec<u8>>();
         counts.sort_by(|&a, &b| a.cmp(&b).reverse());
         match counts[0] {
             5 => 7,
@@ -79,9 +77,9 @@ impl Hand {
             }
         }
 
-        let mut counts = counts.values().map(|v| *v).collect::<Vec<u8>>();
+        let mut counts = counts.values().copied().collect::<Vec<u8>>();
         counts.sort_by(|&a, &b| a.cmp(&b).reverse());
-        if counts.len() == 0 {
+        if counts.is_empty() {
             counts.push(5);
         } else {
             counts[0] += joker_count;

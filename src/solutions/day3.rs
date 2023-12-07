@@ -105,13 +105,13 @@ pub fn run(input: String) -> Option<(String, String)> {
     }
 
     let mut part2_sum = 0;
-    for row in 0..height {
+    (0..height).for_each(|row| {
         for col in 0..width {
             if grid[row][col] == b'*' {
                 part2_sum += calc_gear_ratio(&part_numbers, row, col);
             }
         }
-    }
+    });
 
     Some((part1_sum.to_string(), part2_sum.to_string()))
 }

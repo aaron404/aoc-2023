@@ -1,10 +1,7 @@
 use std::collections::HashSet;
 
 struct Card {
-    winning_nums: HashSet<u8>,
-    given_nums: Vec<u8>,
     hits: u8,
-    id: u32,
 }
 
 impl Card {
@@ -14,14 +11,7 @@ impl Card {
         let mut hits = 0;
         let mut sections = line.split('|');
         let mut first_half = sections.next().unwrap().split(':');
-        let id = first_half
-            .next()
-            .unwrap()
-            .split_ascii_whitespace()
-            .nth(1)
-            .unwrap()
-            .parse::<u32>()
-            .unwrap();
+        first_half.next().unwrap();
         first_half
             .next()
             .unwrap()
@@ -42,12 +32,7 @@ impl Card {
                 }
             });
 
-        Self {
-            winning_nums,
-            given_nums,
-            hits,
-            id,
-        }
+        Self { hits }
     }
 
     fn score(&self) -> u32 {
