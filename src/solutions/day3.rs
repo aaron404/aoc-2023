@@ -78,7 +78,7 @@ pub fn run(input: String) -> Option<(String, String)> {
         part_numbers.push(vec![None; width]);
     }
 
-    let mut part1_sum = 0;
+    let mut part1 = 0;
 
     for row in 0..height {
         let mut col = 0;
@@ -96,7 +96,7 @@ pub fn run(input: String) -> Option<(String, String)> {
                     for x in col..col + num_length {
                         part_numbers[row][x] = Some(num);
                     }
-                    part1_sum += num;
+                    part1 += num;
                 }
                 col = i;
             }
@@ -104,14 +104,14 @@ pub fn run(input: String) -> Option<(String, String)> {
         }
     }
 
-    let mut part2_sum = 0;
+    let mut part2 = 0;
     (0..height).for_each(|row| {
         for col in 0..width {
             if grid[row][col] == b'*' {
-                part2_sum += calc_gear_ratio(&part_numbers, row, col);
+                part2 += calc_gear_ratio(&part_numbers, row, col);
             }
         }
     });
 
-    Some((part1_sum.to_string(), part2_sum.to_string()))
+    Some((part1.to_string(), part2.to_string()))
 }

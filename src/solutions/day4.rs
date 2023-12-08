@@ -44,10 +44,10 @@ impl Card {
 }
 
 pub fn run(input: String) -> Option<(String, String)> {
-    let mut total_score = 0;
+    let mut part1 = 0;
     input.lines().for_each(|line| {
         let game = Card::parse(line);
-        total_score += game.score();
+        part1 += game.score();
     });
 
     let cards = input.lines().map(Card::parse).collect::<Vec<Card>>();
@@ -62,5 +62,5 @@ pub fn run(input: String) -> Option<(String, String)> {
     }
 
     let part2 = counts.into_iter().sum::<u32>();
-    Some((total_score.to_string(), part2.to_string()))
+    Some((part1.to_string(), part2.to_string()))
 }

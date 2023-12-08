@@ -1,7 +1,7 @@
 pub fn run(input: String) -> Option<(String, String)> {
     let maxs = [12, 13, 14];
-    let mut sum = 0;
-    let mut power_sum = 0;
+    let mut part1 = 0;
+    let mut part2 = 0;
 
     for (game, line) in input.lines().enumerate() {
         let mut min_required = [0, 0, 0];
@@ -34,12 +34,11 @@ pub fn run(input: String) -> Option<(String, String)> {
             .zip(maxs)
             .all(|(count, max)| count <= max)
         {
-            sum += game + 1;
+            part1 += game + 1;
         }
 
-        let power = min_required.into_iter().reduce(|acc, e| acc * e).unwrap();
-        power_sum += power;
+        part2 += min_required.into_iter().reduce(|acc, e| acc * e).unwrap();
     }
 
-    Some((sum.to_string(), power_sum.to_string()))
+    Some((part1.to_string(), part2.to_string()))
 }

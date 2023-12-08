@@ -33,8 +33,8 @@ fn line_to_sum2(line: &str) -> u32 {
 
 pub fn run(input: String) -> Option<(String, String)> {
     // let input = include_str!("input/input1.txt");
-    let result: u32 = input.lines().map(line_to_num).sum();
-    let result2: u32 = input.lines().map(line_to_sum2).sum();
+    let part1: u32 = input.lines().map(line_to_num).sum();
+    let part2: u32 = input.lines().map(line_to_sum2).sum();
 
-    Some((result.to_string(), result2.to_string()))
+    Some((part1.to_string(), part2.to_string()))
 }
