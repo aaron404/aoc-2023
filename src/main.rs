@@ -1,6 +1,7 @@
 #![feature(iter_array_chunks)]
 #![feature(ascii_char)]
 #![feature(ascii_char_variants)]
+#![feature(array_windows)]
 
 use std::{fs::File, io::Read};
 
@@ -23,15 +24,13 @@ fn main() -> std::io::Result<()> {
         File::open(&fname)
             .unwrap_or_else(|_| panic!("{}", format!("Failed to open {fname}")))
             .read_to_string(&mut buffer)?;
-        print!("Day {day: >2}");
+        print!("Day {day: >2}: ");
         if [5].contains(&day) {
-            println!("       --- skipped ---");
+            println!("     -------- skipped --------");
             continue;
         }
         if let Some((part1, part2)) = solution(buffer) {
-            println!("{part1: >12}{part2: >12}");
-        } else {
-            println!(":");
+            println!("{part1: >16}{part2: >16}");
         }
     }
 

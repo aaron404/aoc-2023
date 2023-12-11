@@ -1,22 +1,34 @@
+struct Span {
+    src: u64,
+    len: u64,
+}
+
 #[derive(Debug)]
-struct Range {
+struct MapRange {
     src: u64,
     dst: u64,
     len: u64,
 }
 
-impl Range {
+impl MapRange {
     fn map(&self, num: u64) -> Option<u64> {
-        if num >= self.src && num < self.src + self.len {
+        if self.contains(num) {
             return Some(num - self.src + self.dst);
         }
         None
+    }
+
+    fn contains(&self, num: u64) -> bool {
+        if num >= self.src && num < self.src + self.len {
+            return true;
+        }
+        false
     }
 }
 
 #[derive(Debug)]
 struct Map {
-    ranges: Vec<Range>,
+    ranges: Vec<MapRange>,
 }
 
 impl Map {
@@ -27,6 +39,34 @@ impl Map {
             }
         }
         num
+    }
+
+    fn divide_span(&self, span: Span) -> (Span, Option<Span>) {
+        for range in self.ranges.iter() {
+            if range.contains(span.src) {
+                let offset = span.src - range.src;
+            }
+        }
+        todo!()
+    }
+
+    fn get_range(&self, spans: Vec<Span>) -> Vec<Span> {
+        let mut new_spans = Vec::new();
+
+        for span in spans {
+            let mut current_span = span;
+            loop {
+                let (new_span, remainder) = self.divide_span(current_span);
+                if let Some(s) = remainder {
+                    current_span = s;
+                } else {
+                    break;
+                }
+                new_spans.push(new_span);
+            }
+        }
+
+        new_spans
     }
 }
 
@@ -60,7 +100,7 @@ pub fn run(input: String) -> Option<(String, String)> {
                     .split_ascii_whitespace()
                     .map(|num| num.parse::<u64>().unwrap())
                     .collect::<Vec<u64>>();
-                current_map.ranges.push(Range {
+                current_map.ranges.push(MapRange {
                     src: nums[1],
                     dst: nums[0],
                     len: nums[2],
