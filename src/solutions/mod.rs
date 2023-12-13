@@ -10,6 +10,7 @@ mod day9;
 
 mod day10;
 mod day11;
+mod day12;
 
 pub trait Solution {
     fn part1(input: &str) -> Option<String>;
@@ -30,4 +31,5 @@ pub const SOLUTIONS: &[Solver] = &[
     day9::run,
     day10::run,
     day11::run,
+    day12::run,
 ];

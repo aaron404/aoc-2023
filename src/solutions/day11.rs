@@ -22,7 +22,7 @@ fn get_sum_of_distances(
 }
 
 pub fn run(input: String) -> Option<(String, String)> {
-    let mut image = input
+    let image = input
         .lines()
         .map(|line| line.as_bytes().to_vec())
         .collect::<Vec<Vec<u8>>>();
